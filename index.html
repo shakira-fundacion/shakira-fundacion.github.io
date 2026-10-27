@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="description" content="Fundación Shakira - Ayuda a personas en necesidad. Solicita apoyo de forma fácil y rápida.">
+  <meta name="theme-color" content="#0d9488">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Fundación Shakira | Ayuda a quienes más lo necesitan</title>
+  
+  <!-- Favicon - reemplaza assets/favicon.png con el tuyo -->
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/favicon.png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Supabase CDN (opcional, para cuando configures backend) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="#inicio" class="logo">
+        <!-- Logo: coloca assets/logo.png -->
+        <img src="assets/logo.png" alt="Logo Fundación Shakira" class="logo-img" id="logoImg"
+             onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';">
+        <span class="logo-fallback" id="logoFallback">FS</span>
+        <span class="logo-text">Fundación Shakira</span>
+      </a>
+      
+      <!-- Nav (visible en desktop, menú en móvil) -->
+      <nav class="nav-menu" id="navMenu" aria-label="Menú principal">
+        <a href="#inicio" class="nav-link" data-i18n="nav.home">Inicio</a>
+        <a href="#nosotros" class="nav-link" data-i18n="nav.about">Nosotros</a>
+        <a href="#como" class="nav-link" data-i18n="nav.how">Cómo funciona</a>
+        <a href="#galeria" class="nav-link" data-i18n="nav.gallery">Galería</a>
+        <a href="#resenas" class="nav-link" data-i18n="nav.reviews">Reseñas</a>
+        <a href="#solicitar" class="nav-link" data-i18n="nav.request">Solicitar Ayuda</a>
+        <a href="#contacto" class="nav-link" data-i18n="nav.contact">Contactar Agente</a>
+      </nav>
+      
+      <div class="header-actions">
+        <!-- Selector de idioma -->
+        <div class="lang-switcher">
+          <button type="button" class="lang-btn" id="langBtn" aria-label="Cambiar idioma" aria-haspopup="true" aria-expanded="false">
+            <span id="currentLang">ES</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="lang-dropdown" id="langDropdown" role="menu">
+            <button type="button" data-lang="es-latam" class="lang-option active" role="menuitem">Español (Latino)</button>
+            <button type="button" data-lang="es-es" class="lang-option" role="menuitem">Español (España)</button>
+            <button type="button" data-lang="en" class="lang-option" role="menuitem">English</button>
+          </div>
+        </div>
+        
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-controls="navMenu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="inicio">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title" data-i18n="hero.title">Ayudamos a quienes más lo necesitan</h1>
+          <p class="hero-subtitle" data-i18n="hero.subtitle">En Fundación Shakira creemos que nadie debería enfrentar la dificultad solo. Solicita apoyo de forma rápida y confidencial.</p>
+          <a href="#solicitar" class="btn btn-primary btn-lg" data-i18n="hero.cta">Solicitar Ayuda Ahora</a>
+        </div>
+      </div>
+      <div class="hero-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M0 40C240 80 480 0 720 40C960 80 1200 0 1440 40V80H0V40Z" fill="#f0fdfa"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Trust badges -->
+    <div class="container">
+      <div class="trust-bar">
+        <div class="trust-item"><span>🔒</span> <span data-i18n="trust.secure">Datos protegidos</span></div>
+        <div class="trust-item"><span>⚡</span> <span data-i18n="trust.fast">Respuesta rápida</span></div>
+        <div class="trust-item"><span>🤝</span> <span data-i18n="trust.human">Atención humana</span></div>
+      </div>
+    </div>
+
+    <!-- About -->
+    <section class="section about" id="nosotros">
+      <div class="container">
+        <h2 class="section-title" data-i18n="about.title">Nuestra Misión</h2>
+        <p class="section-text" data-i18n="about.text">Fundación Shakira nace con el propósito de brindar apoyo económico y emocional a personas y familias en situación de vulnerabilidad. Trabajamos con transparencia, empatía y compromiso.</p>
+        
+        <div class="features">
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🤝</div>
+            <h3 data-i18n="about.feature1.title">Ayuda Directa</h3>
+            <p data-i18n="about.feature1.text">Apoyo económico según tus necesidades reales.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🔒</div>
+            <h3 data-i18n="about.feature2.title">Confidencial</h3>
+            <p data-i18n="about.feature2.text">Tus datos están protegidos y solo los usamos para ayudarte.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">⚡</div>
+            <h3 data-i18n="about.feature3.title">Rápido</h3>
+            <p data-i18n="about.feature3.text">Proceso sencillo desde tu celular en minutos.</p>
+          </div>
+        </div>
+
+        <!-- Stats - cambia los números si quieres -->
+        <div class="stats">
+          <div class="stat-item">
+            <div class="stat-number">1.2K+</div>
+            <div class="stat-label" data-i18n="stats.helped">Personas ayudadas</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">8</div>
+            <div class="stat-label" data-i18n="stats.countries">Países</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label" data-i18n="stats.years">Años de experiencia</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="section gallery" id="galeria">
+      <div class="container">
+        <h2 class="section-title" data-i18n="gallery.title">Nuestro Impacto</h2>
+        <p class="section-text" data-i18n="gallery.subtitle">Momentos de nuestro equipo ayudando a la comunidad.</p>
+        
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="assets/gallery/ayuda-1.jpg" alt="Ayuda 1"
+                 onerror="this.src='https://placehold.co/400x300/0d9488/ffffff?text=Foto+1'">
+            <div class="gallery-caption" data-i18n="gallery.cap1">Entrega de ayuda alimentaria</div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/gallery/ayuda-2.jpg" alt="Ayuda 2"
+                 onerror="this.src='https://placehold.co/400x300/0f766e/ffffff?text=Foto+2'">
+            <div class="gallery-caption" data-i18n="gallery.cap2">Apoyo a familias</div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/gallery/ayuda-3.jpg" alt="Ayuda 3"
+                 onerror="this.src='https://placehold.co/400x300/14b8a6/ffffff?text=Foto+3'">
+            <div class="gallery-caption" data-i18n="gallery.cap3">Voluntarios en acción</div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/gallery/ayuda-4.jpg" alt="Ayuda 4"
+                 onerror="this.src='https://placehold.co/400x300/5eead4/0f766e?text=Foto+4'">
+            <div class="gallery-caption" data-i18n="gallery.cap4">Comunidad unida</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reseñas -->
+    <section class="section reviews" id="resenas">
+      <div class="container">
+        <h2 class="section-title" data-i18n="reviews.title">Lo que dicen de nosotros</h2>
+        <p class="section-text" data-i18n="reviews.subtitle">Historias reales de personas que hemos acompañado.</p>
+
+        <div class="reviews-grid" id="reviewsGrid">
+          <!-- Reseñas de ejemplo (se reemplazan si hay en Supabase) -->
+          <article class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">"Me ayudaron cuando más lo necesitaba. El proceso fue simple y la gente muy humana. Gracias de corazón."</p>
+            <div class="review-author">— Ana R.</div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">"No sabía por dónde empezar. Ellos me orientaron y me apoyaron. Recomiendo la fundación."</p>
+            <div class="review-author">— Carlos M.</div>
+          </article>
+          <article class="review-card">
+            <div class="review-stars">★★★★☆</div>
+            <p class="review-text">"Respuesta rápida y trato respetuoso. Estoy muy agradecida por la ayuda recibida."</p>
+            <div class="review-author">— Lucía P.</div>
+          </article>
+        </div>
+
+        <!-- Formulario para dejar reseña -->
+        <div class="review-form-wrap">
+          <h3 data-i18n="reviews.form.title">Deja tu reseña</h3>
+          <form id="reviewForm" class="review-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="review_nombre" data-i18n="reviews.form.name">Tu nombre</label>
+                <input type="text" id="review_nombre" name="nombre" required placeholder="Tu nombre">
+              </div>
+              <div class="form-group">
+                <label for="review_estrellas" data-i18n="reviews.form.stars">Calificación</label>
+                <select id="review_estrellas" name="estrellas" required>
+                  <option value="5">★★★★★ 5</option>
+                  <option value="4">★★★★☆ 4</option>
+                  <option value="3">★★★☆☆ 3</option>
+                  <option value="2">★★☆☆☆ 2</option>
+                  <option value="1">★☆☆☆☆ 1</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="review_comentario" data-i18n="reviews.form.comment">Tu experiencia</label>
+              <textarea id="review_comentario" name="comentario" rows="3" required placeholder="Cuéntanos cómo te ayudamos..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-secondary btn-block">
+              <span data-i18n="reviews.form.submit">Publicar reseña</span>
+            </button>
+            <div class="form-message" id="reviewMessage" role="alert"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cómo funciona -->
+    <section class="section how" id="como">
+      <div class="container">
+        <h2 class="section-title" data-i18n="how.title">¿Cómo funciona?</h2>
+        <p class="section-text" data-i18n="how.subtitle">Un proceso simple y humano para ayudarte.</p>
+        <div class="steps">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <h3 data-i18n="how.step1.title">Completa el formulario</h3>
+            <p data-i18n="how.step1.text">Cuéntanos tu situación con honestidad. Solo tomará unos minutos.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <h3 data-i18n="how.step2.title">Revisamos tu caso</h3>
+            <p data-i18n="how.step2.text">Nuestro equipo evalúa cada solicitud con cuidado y empatía.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <h3 data-i18n="how.step3.title">Te contactamos</h3>
+            <p data-i18n="how.step3.text">Te escribimos para informarte cómo podemos apoyarte.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formulario de ayuda -->
+    <section class="section form-section" id="solicitar">
+      <div class="container">
+        <h2 class="section-title" data-i18n="form.title">Solicita tu Ayuda</h2>
+        <p class="section-text" data-i18n="form.subtitle">Completa el formulario. Revisaremos tu solicitud lo antes posible.</p>
+        
+        <form id="helpForm" class="help-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre" data-i18n="form.name">Nombre</label>
+              <input type="text" id="nombre" name="nombre" required autocomplete="given-name" placeholder="Tu nombre">
+            </div>
+            <div class="form-group">
+              <label for="apellido" data-i18n="form.lastname">Apellido</label>
+              <input type="text" id="apellido" name="apellido" required autocomplete="family-name" placeholder="Tu apellido">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edad" data-i18n="form.age">Edad</label>
+              <input type="number" id="edad" name="edad" min="1" max="120" required placeholder="25" inputmode="numeric">
+            </div>
+            <div class="form-group">
+              <label for="telefono" data-i18n="form.phone">Número de teléfono</label>
+              <input type="tel" id="telefono" name="telefono" required autocomplete="tel" placeholder="+57 300 123 4567">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="motivo" data-i18n="form.reason">Motivo de la solicitud</label>
+            <textarea id="motivo" name="motivo" rows="4" required placeholder="Cuéntanos brevemente por qué necesitas ayuda..."></textarea>
+          </div>
+
+          <!-- AVISO IMPORTANTE - antes de elegir cantidad -->
+          <div class="form-notice" role="note">
+            <div class="form-notice-icon" aria-hidden="true">ℹ️</div>
+            <div class="form-notice-body">
+              <strong data-i18n="form.notice.title">Aviso importante</strong>
+              <p data-i18n="form.notice.text">La cantidad que indiques es una referencia. No podemos garantizar que la ayuda llegue exactamente en ese monto ni en un plazo fijo. Evaluamos cada caso y hacemos todo lo posible por apoyarte de la forma más rápida y justa posible según nuestros recursos.</p>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="cantidad" data-i18n="form.amount">Cantidad de ayuda que necesitas (referencia)</label>
+            <select id="cantidad" name="cantidad" required>
+              <option value="" data-i18n="form.amount.select">Selecciona una opción</option>
+              <option value="50">$50 USD</option>
+              <option value="100">$100 USD</option>
+              <option value="200">$200 USD</option>
+              <option value="500">$500 USD</option>
+              <option value="otro" data-i18n="form.amount.other">Otra cantidad</option>
+            </select>
+          </div>
+          
+          <div class="form-group" id="otraCantidadGroup" style="display:none;">
+            <label for="otra_cantidad" data-i18n="form.amount.otherLabel">Especifica la cantidad (USD)</label>
+            <input type="number" id="otra_cantidad" name="otra_cantidad" min="1" placeholder="Ej: 150" inputmode="numeric">
+          </div>
+
+          <div class="form-group">
+            <label for="metodo_pago" data-i18n="form.payment">¿Cómo te gustaría recibir la ayuda?</label>
+            <select id="metodo_pago" name="metodo_pago" required>
+              <option value="" data-i18n="form.payment.select">Selecciona una opción</option>
+              <option value="paypal">PayPal</option>
+              <option value="zelle">Zelle</option>
+              <option value="western_union">Western Union</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="datoPagoGroup" style="display:none;">
+            <label for="dato_pago" id="datoPagoLabel" data-i18n="form.payment.detail">Dato para recibir</label>
+            <input type="text" id="dato_pago" name="dato_pago" placeholder="Ej: correo@email.com">
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
+            <span data-i18n="form.submit">Enviar Solicitud</span>
+            <span class="spinner" id="spinner" style="display:none;" aria-hidden="true"></span>
+          </button>
+          
+          <div class="form-message" id="formMessage" role="alert" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Contacto agente -->
+    <section class="section contact" id="contacto">
+      <div class="container">
+        <h2 class="section-title" data-i18n="contact.title">Habla con un Agente</h2>
+        <p class="section-text" data-i18n="contact.subtitle">Si prefieres hablar directamente con alguien de nuestro equipo, contáctanos por WhatsApp o envíanos un mensaje.</p>
+        
+        <div class="contact-options">
+          <!-- Cambia el número: 573001234567 → código país + número sin + ni espacios -->
+          <a href="https://wa.me/573001234567?text=Hola%2C%20necesito%20ayuda%20de%20Fundaci%C3%B3n%20Shakira"
+             class="btn btn-whatsapp btn-lg"
+             target="_blank"
+             rel="noopener noreferrer"
+             id="whatsappBtn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span data-i18n="contact.whatsapp">Escribir por WhatsApp</span>
+          </a>
+          
+          <p class="or-divider" data-i18n="contact.or">o envíanos un mensaje</p>
+          
+          <form id="contactForm" class="contact-form" novalidate>
+            <div class="form-group">
+              <label for="contact_nombre" data-i18n="contact.form.name">Tu nombre</label>
+              <input type="text" id="contact_nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+              <label for="contact_mensaje" data-i18n="contact.form.message">Mensaje</label>
+              <textarea id="contact_mensaje" name="mensaje" rows="3" required placeholder="¿En qué podemos ayudarte?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-secondary btn-block">
+              <span data-i18n="contact.form.submit">Enviar Mensaje</span>
+            </button>
+            <div class="form-message" id="contactMessage" role="alert" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="logo-text">Fundación Shakira</span>
+          <p data-i18n="footer.tagline">Ayudando con el corazón</p>
+        </div>
+        <div class="footer-links">
+          <a href="#inicio" data-i18n="nav.home">Inicio</a>
+          <a href="#nosotros" data-i18n="nav.about">Nosotros</a>
+          <a href="#solicitar" data-i18n="nav.request">Solicitar Ayuda</a>
+          <a href="#contacto" data-i18n="nav.contact">Contacto</a>
+        </div>
+      </div>
+      <p class="footer-transparency" data-i18n="footer.transparency">Trabajamos con transparencia. Cada solicitud se revisa de forma individual según la disponibilidad de recursos.</p>
+      <p class="footer-copy">&copy; <span id="year"></span> Fundación Shakira. <span data-i18n="footer.rights">Todos los derechos reservados.</span></p>
+    </div>
+  </footer>
+
+  <!-- Orden importante: primero i18n, luego app -->
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

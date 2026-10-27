@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin | Fundación Shakira</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="admin-body">
+  <!-- Login -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="login-logo">FS</div>
+      <h1>Panel de Administración</h1>
+      <p>Fundación Shakira</p>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="adminPass">Contraseña</label>
+          <input type="password" id="adminPass" required placeholder="Ingresa la contraseña" autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+        <div class="form-message error" id="loginError" style="display:none;">Contraseña incorrecta</div>
+      </form>
+      <a href="index.html" class="back-link">← Volver al sitio</a>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="dashboard" style="display:none;">
+    <header class="admin-header">
+      <div class="admin-header-inner">
+        <div class="admin-brand">
+          <span class="logo-fallback" style="display:flex;">FS</span>
+          <div>
+            <strong>Fundación Shakira</strong>
+            <small>Panel admin</small>
+          </div>
+        </div>
+        <div class="admin-header-actions">
+          <button type="button" class="btn-icon" id="refreshBtn" title="Actualizar">↻</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="logoutBtn">Salir</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <div class="admin-tabs">
+        <button type="button" class="admin-tab active" data-tab="solicitudes">Solicitudes <span class="badge" id="badgeSolicitudes">0</span></button>
+        <button type="button" class="admin-tab" data-tab="resenas">Reseñas <span class="badge" id="badgeResenas">0</span></button>
+        <button type="button" class="admin-tab" data-tab="mensajes">Mensajes <span class="badge" id="badgeMensajes">0</span></button>
+      </div>
+
+      <!-- Solicitudes -->
+      <section id="tab-solicitudes" class="tab-panel active">
+        <div class="panel-header">
+          <h2>Solicitudes de ayuda</h2>
+          <p>Aquí llegan los formularios de la página web</p>
+        </div>
+        <div class="filters">
+          <input type="search" id="searchSolicitudes" placeholder="Buscar por nombre, teléfono...">
+        </div>
+        <div id="solicitudesList" class="cards-list">
+          <div class="loading">Cargando...</div>
+        </div>
+      </section>
+
+      <!-- Reseñas -->
+      <section id="tab-resenas" class="tab-panel">
+        <div class="panel-header">
+          <h2>Reseñas recibidas</h2>
+          <p>Opiniones que la gente deja en el sitio</p>
+        </div>
+        <div id="resenasList" class="cards-list">
+          <div class="loading">Cargando...</div>
+        </div>
+      </section>
+
+      <!-- Mensajes -->
+      <section id="tab-mensajes" class="tab-panel">
+        <div class="panel-header">
+          <h2>Mensajes al agente</h2>
+          <p>Mensajes del formulario de contacto</p>
+        </div>
+        <div id="mensajesList" class="cards-list">
+          <div class="loading">Cargando...</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

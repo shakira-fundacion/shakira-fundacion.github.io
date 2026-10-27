@@ -1,0 +1,1 @@
+Coloca aquí ayuda-1.jpg, ayuda-2.jpg, ayuda-3.jpg, ayuda-4.jpg
