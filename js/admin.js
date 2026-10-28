@@ -1,19 +1,12 @@
 /**
  * Panel Admin - Fundación Shakira
- *
- * 1. Cambia ADMIN_PASSWORD por tu contraseña
- * 2. Configura SUPABASE_URL y SUPABASE_ANON_KEY (igual que en app.js)
- * 3. En Supabase, permite SELECT a las tablas para anon o usa service role con cuidado
  */
 (function () {
   'use strict';
 
-  // ========== CONFIGURA AQUÍ ==========
-  var ADMIN_PASSWORD = 'shakira2026'; // ← Cambia esta contraseña
-
+  var ADMIN_PASSWORD = 'shakira2026';
   var SUPABASE_URL = 'https://rxhhvgvxabqcacdrywqu.supabase.co';
   var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4aGh2Z3Z4YWJxY2FjZHJ5d3F1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxNDA0NjEsImV4cCI6MjEwODcxNjQ2MX0.L7NF4HWndqw9NHP9Od1p2NPgSgNUFGLbkrvp6m2uK30';
-  // ====================================
 
   var supabaseClient = null;
   var allSolicitudes = [];
@@ -22,69 +15,41 @@
 
   function initSupabase() {
     try {
-      if (
-        SUPABASE_URL &&
-        !SUPABASE_URL.includes('TU_PROYECTO') &&
-        SUPABASE_ANON_KEY &&
-        !SUPABASE_ANON_KEY.includes('TU_ANON') &&
-        window.supabase &&
-        window.supabase.createClient
-      ) {
+      if (window.supabase && window.supabase.createClient) {
         supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         return true;
       }
-    } catch (e) {
-      console.warn(e);
-    }
+    } catch (e) { console.warn(e); }
     return false;
   }
 
   function formatDate(iso) {
     if (!iso) return '';
     try {
-      var d = new Date(iso);
-      return d.toLocaleDateString('es', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-    } catch (e) {
-      return iso;
-    }
+      return new Date(iso).toLocaleDateString('es', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    } catch (e) { return iso; }
   }
 
   function metodoLabel(m) {
-    var map = {
-      paypal: 'PayPal',
-      zelle: 'Zelle',
-      western_union: 'Western Union'
-    };
-    return map[m] || m || '—';
+    return ({ paypal: 'PayPal', zelle: 'Zelle', western_union: 'Western Union' })[m] || m || '—';
   }
 
   function stars(n) {
-    var s = '';
-    var num = parseInt(n, 10) || 0;
-    for (var i = 1; i <= 5; i++) {
-      s += i <= num ? '★' : '☆';
-    }
+    var s = '', num = parseInt(n, 10) || 0;
+    for (var i = 1; i <= 5; i++) s += i <= num ? '★' : '☆';
     return s;
   }
 
-  // ----- Login -----
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
   function initLogin() {
     var form = document.getElementById('loginForm');
     var passInput = document.getElementById('adminPass');
     var err = document.getElementById('loginError');
-
-    // Auto-login si ya estaba logueado en esta sesión
-    if (sessionStorage.getItem('fs_admin') === '1') {
-      showDashboard();
-      return;
-    }
-
+    if (sessionStorage.getItem('fs_admin') === '1') { showDashboard(); return; }
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (passInput.value === ADMIN_PASSWORD) {
@@ -112,153 +77,43 @@
     document.getElementById('adminPass').value = '';
   }
 
-  // ----- Tabs -----
   function initTabs() {
     document.querySelectorAll('.admin-tab').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        document.querySelectorAll('.admin-tab').forEach(function (b) {
-          b.classList.remove('active');
-        });
-        document.querySelectorAll('.tab-panel').forEach(function (p) {
-          p.classList.remove('active');
-        });
+        document.querySelectorAll('.admin-tab').forEach(function (b) { b.classList.remove('active'); });
+        document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
         btn.classList.add('active');
-        var tab = btn.getAttribute('data-tab');
-        var panel = document.getElementById('tab-' + tab);
+        var panel = document.getElementById('tab-' + btn.getAttribute('data-tab'));
         if (panel) panel.classList.add('active');
       });
     });
   }
 
-  // ----- Load data -----
   async function loadAll() {
-    var hasSupabase = initSupabase();
-
-    if (!hasSupabase) {
-      // Datos de demostración si no hay Supabase
-      renderDemoBanner();
-      allSolicitudes = getDemoSolicitudes();
-      allResenas = getDemoResenas();
-      allMensajes = getDemoMensajes();
-      renderSolicitudes(allSolicitudes);
-      renderResenas(allResenas);
-      renderMensajes(allMensajes);
+    if (!initSupabase()) {
+      allSolicitudes = []; allResenas = []; allMensajes = [];
+      renderSolicitudes([]); renderResenas([]); renderMensajes([]);
       updateBadges();
       return;
     }
-
     try {
-      var s = await supabaseClient
-        .from('solicitudes')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      var r = await supabaseClient
-        .from('resenas')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      var m = await supabaseClient
-        .from('mensajes')
-        .select('*')
-        .order('created_at', { ascending: false });
-
+      var s = await supabaseClient.from('solicitudes').select('*').order('created_at', { ascending: false });
+      var r = await supabaseClient.from('resenas').select('*').order('created_at', { ascending: false });
+      var m = await supabaseClient.from('mensajes').select('*').order('created_at', { ascending: false });
       allSolicitudes = s.data || [];
       allResenas = r.data || [];
       allMensajes = m.data || [];
-
-      if (s.error) console.warn('solicitudes:', s.error);
-      if (r.error) console.warn('resenas:', r.error);
-      if (m.error) console.warn('mensajes:', m.error);
+      if (s.error) console.warn(s.error);
+      if (r.error) console.warn(r.error);
+      if (m.error) console.warn(m.error);
     } catch (e) {
       console.error(e);
-      allSolicitudes = [];
-      allResenas = [];
-      allMensajes = [];
+      allSolicitudes = []; allResenas = []; allMensajes = [];
     }
-
     renderSolicitudes(allSolicitudes);
     renderResenas(allResenas);
     renderMensajes(allMensajes);
     updateBadges();
-  }
-
-  function renderDemoBanner() {
-    var panels = document.querySelectorAll('.tab-panel');
-    panels.forEach(function (p) {
-      if (p.querySelector('.demo-banner')) return;
-      var b = document.createElement('div');
-      b.className = 'demo-banner';
-      b.innerHTML =
-        '<strong>Modo demo:</strong> Configura Supabase en <code>js/admin.js</code> para ver datos reales. Ahora se muestran ejemplos.';
-      var header = p.querySelector('.panel-header');
-      if (header && header.nextSibling) {
-        p.insertBefore(b, header.nextSibling);
-      } else {
-        p.appendChild(b);
-      }
-    });
-  }
-
-  function getDemoSolicitudes() {
-    return [
-      {
-        id: 1,
-        nombre: 'María',
-        apellido: 'García',
-        edad: 34,
-        telefono: '+57 300 111 2222',
-        cantidad_ayuda: '100',
-        motivo: 'Necesito ayuda para medicamentos de mi hijo.',
-        metodo_pago: 'paypal',
-        dato_pago: 'maria@email.com',
-        idioma: 'es-latam',
-        created_at: new Date().toISOString()
-      },
-      {
-        id: 2,
-        nombre: 'Carlos',
-        apellido: 'López',
-        edad: 45,
-        telefono: '+1 555 987 6543',
-        cantidad_ayuda: '200',
-        motivo: 'Perdí el trabajo y necesito apoyo para el alquiler este mes.',
-        metodo_pago: 'zelle',
-        dato_pago: '+15559876543',
-        idioma: 'es-latam',
-        created_at: new Date(Date.now() - 86400000).toISOString()
-      }
-    ];
-  }
-
-  function getDemoResenas() {
-    return [
-      {
-        id: 1,
-        nombre: 'Ana R.',
-        estrellas: 5,
-        comentario: 'Me ayudaron cuando más lo necesitaba. Muy agradecida.',
-        created_at: new Date(Date.now() - 172800000).toISOString()
-      },
-      {
-        id: 2,
-        nombre: 'Pedro M.',
-        estrellas: 4,
-        comentario: 'Proceso sencillo y gente muy amable. Gracias.',
-        created_at: new Date(Date.now() - 432000000).toISOString()
-      }
-    ];
-  }
-
-  function getDemoMensajes() {
-    return [
-      {
-        id: 1,
-        nombre: 'Lucía',
-        mensaje: 'Quisiera saber si pueden ayudarme con alimentos.',
-        created_at: new Date(Date.now() - 3600000).toISOString()
-      }
-    ];
   }
 
   function updateBadges() {
@@ -270,168 +125,114 @@
     if (bm) bm.textContent = allMensajes.length;
   }
 
+  async function deleteRow(table, id) {
+    if (!confirm('¿Seguro que quieres borrar esto?')) return;
+    if (!supabaseClient) return;
+    var result = await supabaseClient.from(table).delete().eq('id', id);
+    if (result.error) {
+      alert('Error al borrar: ' + result.error.message + '\n\nEn Supabase SQL ejecuta:\nCREATE POLICY "delete_'+table+'" ON '+table+' FOR DELETE TO anon USING (true);');
+      return;
+    }
+    await loadAll();
+  }
+
+  async function approveReview(id) {
+    if (!supabaseClient) return;
+    var result = await supabaseClient.from('resenas').update({ aprobada: true }).eq('id', id);
+    if (result.error) {
+      alert('Error al aprobar: ' + result.error.message + '\n\nEjecuta en SQL Editor:\nALTER TABLE resenas ADD COLUMN IF NOT EXISTS aprobada BOOLEAN DEFAULT false;\nCREATE POLICY "update_resenas" ON resenas FOR UPDATE TO anon USING (true) WITH CHECK (true);');
+      return;
+    }
+    await loadAll();
+  }
+
+  function bindActionButtons(container) {
+    container.querySelectorAll('.btn-delete').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        deleteRow(btn.getAttribute('data-table'), parseInt(btn.getAttribute('data-id'), 10));
+      });
+    });
+    container.querySelectorAll('.btn-approve').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        approveReview(parseInt(btn.getAttribute('data-id'), 10));
+      });
+    });
+  }
+
   function renderSolicitudes(list) {
     var el = document.getElementById('solicitudesList');
     if (!el) return;
-
-    if (!list.length) {
-      el.innerHTML = '<div class="empty-state">No hay solicitudes todavía</div>';
-      return;
-    }
-
-    el.innerHTML = list
-      .map(function (item) {
-        return (
-          '<article class="admin-card">' +
-          '<div class="admin-card-header">' +
-          '<strong>' +
-          escapeHtml(item.nombre) +
-          ' ' +
-          escapeHtml(item.apellido) +
-          '</strong>' +
-          '<span class="admin-card-date">' +
-          formatDate(item.created_at) +
-          '</span>' +
-          '</div>' +
-          '<div class="admin-card-row">' +
-          '<span><b>Edad:</b> ' +
-          escapeHtml(String(item.edad)) +
-          '</span>' +
-          '<span><b>Tel:</b> ' +
-          escapeHtml(item.telefono) +
-          '</span>' +
-          '<span><b>Monto:</b> $' +
-          escapeHtml(String(item.cantidad_ayuda)) +
-          ' USD</span>' +
-          '</div>' +
-          '<div class="admin-card-pago">' +
-          metodoLabel(item.metodo_pago) +
-          ': ' +
-          escapeHtml(item.dato_pago || '—') +
-          '</div>' +
-          '<div class="admin-card-motivo">' +
-          escapeHtml(item.motivo || '') +
-          '</div>' +
-          '</article>'
-        );
-      })
-      .join('');
+    if (!list.length) { el.innerHTML = '<div class="empty-state">No hay solicitudes todavía</div>'; return; }
+    el.innerHTML = list.map(function (item) {
+      return '<article class="admin-card">' +
+        '<div class="admin-card-header"><strong>' + escapeHtml(item.nombre) + ' ' + escapeHtml(item.apellido) + '</strong>' +
+        '<span class="admin-card-date">' + formatDate(item.created_at) + '</span></div>' +
+        '<div class="admin-card-row"><span><b>Edad:</b> ' + escapeHtml(String(item.edad)) + '</span>' +
+        '<span><b>Tel:</b> ' + escapeHtml(item.telefono) + '</span>' +
+        '<span><b>Monto:</b> $' + escapeHtml(String(item.cantidad_ayuda)) + ' USD</span></div>' +
+        '<div class="admin-card-pago">' + metodoLabel(item.metodo_pago) + ': ' + escapeHtml(item.dato_pago || '—') + '</div>' +
+        '<div class="admin-card-motivo">' + escapeHtml(item.motivo || '') + '</div>' +
+        '<div class="admin-card-actions"><button type="button" class="btn-delete" data-table="solicitudes" data-id="' + item.id + '">Borrar</button></div>' +
+        '</article>';
+    }).join('');
+    bindActionButtons(el);
   }
 
   function renderResenas(list) {
     var el = document.getElementById('resenasList');
     if (!el) return;
-
-    if (!list.length) {
-      el.innerHTML = '<div class="empty-state">No hay reseñas todavía</div>';
-      return;
-    }
-
-    el.innerHTML = list
-      .map(function (item) {
-        return (
-          '<article class="admin-card">' +
-          '<div class="admin-card-header">' +
-          '<strong>' +
-          escapeHtml(item.nombre) +
-          '</strong>' +
-          '<span class="admin-card-date">' +
-          formatDate(item.created_at) +
-          '</span>' +
-          '</div>' +
-          '<div class="admin-card-stars">' +
-          stars(item.estrellas) +
-          '</div>' +
-          '<div class="admin-card-motivo">' +
-          escapeHtml(item.comentario || '') +
-          '</div>' +
-          '</article>'
-        );
-      })
-      .join('');
+    if (!list.length) { el.innerHTML = '<div class="empty-state">No hay reseñas todavía</div>'; return; }
+    el.innerHTML = list.map(function (item) {
+      var pending = item.aprobada !== true;
+      var status = pending ? '<span class="status-pending">Pendiente de aprobación</span>' : '<span class="status-ok">Publicada</span>';
+      var approveBtn = pending ? '<button type="button" class="btn-approve" data-id="' + item.id + '">Aprobar y publicar</button>' : '';
+      return '<article class="admin-card' + (pending ? ' admin-card-pending' : '') + '">' +
+        '<div class="admin-card-header"><strong>' + escapeHtml(item.nombre) + '</strong>' +
+        '<span class="admin-card-date">' + formatDate(item.created_at) + '</span></div>' +
+        status +
+        '<div class="admin-card-stars">' + stars(item.estrellas) + '</div>' +
+        '<div class="admin-card-motivo">' + escapeHtml(item.comentario || '') + '</div>' +
+        '<div class="admin-card-actions">' + approveBtn +
+        '<button type="button" class="btn-delete" data-table="resenas" data-id="' + item.id + '">Borrar</button></div>' +
+        '</article>';
+    }).join('');
+    bindActionButtons(el);
   }
 
   function renderMensajes(list) {
     var el = document.getElementById('mensajesList');
     if (!el) return;
-
-    if (!list.length) {
-      el.innerHTML = '<div class="empty-state">No hay mensajes todavía</div>';
-      return;
-    }
-
-    el.innerHTML = list
-      .map(function (item) {
-        return (
-          '<article class="admin-card">' +
-          '<div class="admin-card-header">' +
-          '<strong>' +
-          escapeHtml(item.nombre) +
-          '</strong>' +
-          '<span class="admin-card-date">' +
-          formatDate(item.created_at) +
-          '</span>' +
-          '</div>' +
-          '<div class="admin-card-motivo">' +
-          escapeHtml(item.mensaje || '') +
-          '</div>' +
-          '</article>'
-        );
-      })
-      .join('');
+    if (!list.length) { el.innerHTML = '<div class="empty-state">No hay mensajes todavía</div>'; return; }
+    el.innerHTML = list.map(function (item) {
+      return '<article class="admin-card">' +
+        '<div class="admin-card-header"><strong>' + escapeHtml(item.nombre) + '</strong>' +
+        '<span class="admin-card-date">' + formatDate(item.created_at) + '</span></div>' +
+        '<div class="admin-card-motivo">' + escapeHtml(item.mensaje || '') + '</div>' +
+        '<div class="admin-card-actions"><button type="button" class="btn-delete" data-table="mensajes" data-id="' + item.id + '">Borrar</button></div>' +
+        '</article>';
+    }).join('');
+    bindActionButtons(el);
   }
 
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
-  // Search
   function initSearch() {
     var input = document.getElementById('searchSolicitudes');
     if (!input) return;
     input.addEventListener('input', function () {
       var q = input.value.toLowerCase().trim();
-      if (!q) {
-        renderSolicitudes(allSolicitudes);
-        return;
-      }
-      var filtered = allSolicitudes.filter(function (item) {
-        var text = (
-          (item.nombre || '') +
-          ' ' +
-          (item.apellido || '') +
-          ' ' +
-          (item.telefono || '') +
-          ' ' +
-          (item.motivo || '') +
-          ' ' +
-          (item.dato_pago || '')
-        ).toLowerCase();
-        return text.indexOf(q) !== -1;
-      });
-      renderSolicitudes(filtered);
+      if (!q) { renderSolicitudes(allSolicitudes); return; }
+      renderSolicitudes(allSolicitudes.filter(function (item) {
+        return ((item.nombre||'')+' '+(item.apellido||'')+' '+(item.telefono||'')+' '+(item.motivo||'')+' '+(item.dato_pago||'')).toLowerCase().indexOf(q) !== -1;
+      }));
     });
   }
 
-  // Start
   document.addEventListener('DOMContentLoaded', function () {
     initLogin();
     initTabs();
     initSearch();
-
     var logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) logoutBtn.addEventListener('click', logout);
-
     var refreshBtn = document.getElementById('refreshBtn');
-    if (refreshBtn) {
-      refreshBtn.addEventListener('click', function () {
-        loadAll();
-      });
-    }
+    if (refreshBtn) refreshBtn.addEventListener('click', loadAll);
   });
 })();

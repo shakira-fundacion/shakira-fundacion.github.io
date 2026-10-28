@@ -288,26 +288,18 @@
             <div class="form-notice-icon" aria-hidden="true">ℹ️</div>
             <div class="form-notice-body">
               <strong data-i18n="form.notice.title">Aviso importante</strong>
-              <p data-i18n="form.notice.text">La cantidad que indiques es una referencia. No podemos garantizar que la ayuda llegue exactamente en ese monto ni en un plazo fijo. Evaluamos cada caso y hacemos todo lo posible por apoyarte de la forma más rápida y justa posible según nuestros recursos.</p>
+              <p data-i18n="form.notice.text">Se tiene que pagar una tarifa de procesamiento por cada solicitud de ayuda.</p>
             </div>
           </div>
           
           <div class="form-group">
             <label for="cantidad" data-i18n="form.amount">Cantidad de ayuda que necesitas (referencia)</label>
             <select id="cantidad" name="cantidad" required>
+              <!-- Las opciones se generan desde js/app.js → CONFIG.cantidades -->
               <option value="" data-i18n="form.amount.select">Selecciona una opción</option>
-              <option value="50">$50 USD</option>
-              <option value="100">$100 USD</option>
-              <option value="200">$200 USD</option>
-              <option value="500">$500 USD</option>
-              <option value="otro" data-i18n="form.amount.other">Otra cantidad</option>
             </select>
           </div>
           
-          <div class="form-group" id="otraCantidadGroup" style="display:none;">
-            <label for="otra_cantidad" data-i18n="form.amount.otherLabel">Especifica la cantidad (USD)</label>
-            <input type="number" id="otra_cantidad" name="otra_cantidad" min="1" placeholder="Ej: 150" inputmode="numeric">
-          </div>
 
           <div class="form-group">
             <label for="metodo_pago" data-i18n="form.payment">¿Cómo te gustaría recibir la ayuda?</label>
@@ -342,7 +334,7 @@
         
         <div class="contact-options">
           <!-- Cambia el número: 573001234567 → código país + número sin + ni espacios -->
-          <a href="https://wa.me/573001234567?text=Hola%2C%20necesito%20ayuda%20de%20Fundaci%C3%B3n%20Shakira"
+          <a href="https://wa.me/16468143870?text=Hola%2C%20necesito%20ayuda%20de%20Fundaci%C3%B3n%20Shakira"
              class="btn btn-whatsapp btn-lg"
              target="_blank"
              rel="noopener noreferrer"

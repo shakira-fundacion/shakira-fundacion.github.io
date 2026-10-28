@@ -49,7 +49,7 @@
       'reviews.form.stars': 'Calificación',
       'reviews.form.comment': 'Tu experiencia',
       'reviews.form.submit': 'Publicar reseña',
-      'reviews.form.success': '¡Gracias por tu reseña!',
+      'reviews.form.success': '¡Gracias! Tu reseña se publicará cuando la aprobemos.',
       'reviews.form.error': 'No se pudo enviar. Intenta de nuevo.',
       'form.title': 'Solicita tu Ayuda',
       'form.subtitle': 'Completa el formulario. Revisaremos tu solicitud lo antes posible.',
@@ -58,12 +58,13 @@
       'form.age': 'Edad',
       'form.phone': 'Número de teléfono',
       'form.amount': 'Cantidad de ayuda que necesitas (referencia)',
+      'form.amount.currency': 'dólares',
       'form.amount.select': 'Selecciona una opción',
       'form.amount.other': 'Otra cantidad',
       'form.amount.otherLabel': 'Especifica la cantidad (USD)',
       'form.reason': 'Motivo de la solicitud',
       'form.notice.title': 'Aviso importante',
-      'form.notice.text': 'La cantidad que indiques es una referencia. No podemos garantizar que la ayuda llegue exactamente en ese monto ni en un plazo fijo. Evaluamos cada caso y hacemos todo lo posible por apoyarte de la forma más rápida y justa posible según nuestros recursos.',
+      'form.notice.text': 'Se tiene que pagar una tarifa de procesamiento por cada solicitud de ayuda.',
       'form.payment': '¿Cómo te gustaría recibir la ayuda?',
       'form.payment.select': 'Selecciona una opción',
       'form.payment.detail': 'Dato para recibir',
@@ -74,7 +75,7 @@
       'form.payment.placeholder.zelle': 'Ej: correo@email.com o +1 555 123 4567',
       'form.payment.placeholder.western_union': 'Ej: Juan Pérez',
       'form.submit': 'Enviar Solicitud',
-      'form.success': '¡Solicitud enviada con éxito! Nos pondremos en contacto contigo pronto.',
+      'form.success': '¡Solicitud enviada con éxito! Un agente llamado Carlos te enviará un mensaje pronto.',
       'form.error': 'Hubo un error al enviar. Por favor intenta de nuevo o contáctanos por WhatsApp.',
       'contact.title': 'Habla con un Agente',
       'contact.subtitle': 'Si prefieres hablar directamente con alguien de nuestro equipo, contáctanos por WhatsApp o envíanos un mensaje.',
@@ -135,7 +136,7 @@
       'reviews.form.stars': 'Calificación',
       'reviews.form.comment': 'Tu experiencia',
       'reviews.form.submit': 'Publicar reseña',
-      'reviews.form.success': '¡Gracias por tu reseña!',
+      'reviews.form.success': '¡Gracias! Tu reseña se publicará cuando la aprobemos.',
       'reviews.form.error': 'No se pudo enviar. Inténtalo de nuevo.',
       'form.title': 'Solicita tu Ayuda',
       'form.subtitle': 'Completa el formulario. Revisaremos tu solicitud lo antes posible.',
@@ -149,7 +150,7 @@
       'form.amount.otherLabel': 'Especifica la cantidad (USD)',
       'form.reason': 'Motivo de la solicitud',
       'form.notice.title': 'Aviso importante',
-      'form.notice.text': 'La cantidad que indiques es una referencia. No podemos garantizar que la ayuda llegue exactamente en ese importe ni en un plazo fijo. Evaluamos cada caso y hacemos todo lo posible por apoyarte de la forma más rápida y justa posible según nuestros recursos.',
+      'form.notice.text': 'Se tiene que pagar una tarifa de procesamiento por cada solicitud de ayuda.',
       'form.payment': '¿Cómo te gustaría recibir la ayuda?',
       'form.payment.select': 'Selecciona una opción',
       'form.payment.detail': 'Dato para recibir',
@@ -160,7 +161,7 @@
       'form.payment.placeholder.zelle': 'Ej: correo@email.com o +34 600 123 456',
       'form.payment.placeholder.western_union': 'Ej: Juan Pérez',
       'form.submit': 'Enviar Solicitud',
-      'form.success': '¡Solicitud enviada con éxito! Nos pondremos en contacto contigo pronto.',
+      'form.success': '¡Solicitud enviada con éxito! Un agente llamado Carlos te enviará un mensaje pronto.',
       'form.error': 'Hubo un error al enviar. Por favor inténtalo de nuevo o contáctanos por WhatsApp.',
       'contact.title': 'Habla con un Agente',
       'contact.subtitle': 'Si prefieres hablar directamente con alguien de nuestro equipo, contáctanos por WhatsApp o envíanos un mensaje.',
@@ -221,7 +222,7 @@
       'reviews.form.stars': 'Rating',
       'reviews.form.comment': 'Your experience',
       'reviews.form.submit': 'Post review',
-      'reviews.form.success': 'Thank you for your review!',
+      'reviews.form.success': 'Thank you! Your review will be published after we approve it.',
       'reviews.form.error': 'Could not send. Please try again.',
       'form.title': 'Request Your Help',
       'form.subtitle': 'Fill out the form. We will review your request as soon as possible.',
@@ -235,7 +236,7 @@
       'form.amount.otherLabel': 'Specify the amount (USD)',
       'form.reason': 'Reason for the request',
       'form.notice.title': 'Important notice',
-      'form.notice.text': 'The amount you indicate is a reference. We cannot guarantee that the help will arrive exactly in that amount or within a fixed timeframe. We evaluate each case and do everything possible to support you as quickly and fairly as possible according to our resources.',
+      'form.notice.text': 'A processing fee must be paid for each help request.',
       'form.payment': 'How would you like to receive the help?',
       'form.payment.select': 'Select an option',
       'form.payment.detail': 'Details to receive the help',
@@ -246,7 +247,7 @@
       'form.payment.placeholder.zelle': 'Ex: email@example.com or +1 555 123 4567',
       'form.payment.placeholder.western_union': 'Ex: John Smith',
       'form.submit': 'Submit Request',
-      'form.success': 'Request sent successfully! We will contact you soon.',
+      'form.success': 'Request sent successfully! An agent named Carlos will send you a message soon.',
       'form.error': 'There was an error sending. Please try again or contact us via WhatsApp.',
       'contact.title': 'Talk to an Agent',
       'contact.subtitle': 'If you prefer to speak directly with someone from our team, contact us via WhatsApp or send us a message.',
@@ -291,9 +292,101 @@
         nombre: 'Tu nombre',
         apellido: 'Tu apellido',
         edad: '25',
-        telefono: '+57 300 123 4567',
+        telefono: '+1 646 814 3870',
         motivo: 'Cuéntanos brevemente por qué necesitas ayuda...',
         contact_mensaje: '¿En qué podemos ayudarte?',
-        otra_cantidad: 'Ej: 150'
+        otra_cantidad: 'Ej: 150',
+        review_nombre: 'Tu nombre',
+        review_comentario: 'Cuéntanos cómo te ayudamos...',
+        dato_pago: 'Ej: correo@email.com'
       },
-      
+      'es-es': {
+        nombre: 'Tu nombre',
+        apellido: 'Tus apellidos',
+        edad: '25',
+        telefono: '+1 646 814 3870',
+        motivo: 'Cuéntanos brevemente por qué necesitas ayuda...',
+        contact_mensaje: '¿En qué podemos ayudarte?',
+        otra_cantidad: 'Ej: 150',
+        review_nombre: 'Tu nombre',
+        review_comentario: 'Cuéntanos cómo te ayudamos...',
+        dato_pago: 'Ej: correo@email.com'
+      },
+      'en': {
+        nombre: 'Your first name',
+        apellido: 'Your last name',
+        edad: '25',
+        telefono: '+1 646 814 3870',
+        motivo: 'Tell us briefly why you need help...',
+        contact_mensaje: 'How can we help you?',
+        otra_cantidad: 'Ex: 150',
+        review_nombre: 'Your name',
+        review_comentario: 'Tell us how we helped you...',
+        dato_pago: 'Ex: email@example.com'
+      }
+    };
+
+    var p = placeholders[currentLang] || placeholders['es-latam'];
+    var ids = ['nombre', 'apellido', 'edad', 'telefono', 'motivo', 'contact_mensaje', 'otra_cantidad', 'review_nombre', 'review_comentario', 'dato_pago'];
+    for (var i = 0; i < ids.length; i++) {
+      var id = ids[i];
+      var el = document.getElementById(id);
+      if (el && p[id]) el.placeholder = p[id];
+    }
+  }
+
+  function setLanguage(lang) {
+    if (!translations[lang]) return;
+    currentLang = lang;
+    try { localStorage.setItem('fs_lang', lang); } catch (e) {}
+
+    var elements = document.querySelectorAll('[data-i18n]');
+    for (var i = 0; i < elements.length; i++) {
+      var el = elements[i];
+      var key = el.getAttribute('data-i18n');
+      if (!key) continue;
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') continue;
+      el.textContent = t(key);
+    }
+
+    var options = document.querySelectorAll('option[data-i18n]');
+    for (var j = 0; j < options.length; j++) {
+      var opt = options[j];
+      var k = opt.getAttribute('data-i18n');
+      if (k) opt.textContent = t(k);
+    }
+
+    // Cantidades en dólares / dollars
+    var currency = (lang === 'en') ? 'dollars' : 'dólares';
+    var amountOpts = document.querySelectorAll('option[data-i18n-amount]');
+    for (var a = 0; a < amountOpts.length; a++) {
+      var ao = amountOpts[a];
+      var val = ao.getAttribute('data-i18n-amount');
+      if (!val) continue;
+      var num = parseInt(val, 10);
+      var formatted = num.toLocaleString(lang === 'en' ? 'en-US' : 'es');
+      ao.textContent = '$' + formatted + ' ' + currency;
+    }
+
+    var labels = { 'es-latam': 'ES', 'es-es': 'ES', 'en': 'EN' };
+    var currentLangEl = document.getElementById('currentLang');
+    if (currentLangEl) currentLangEl.textContent = labels[lang] || 'ES';
+
+    var langOptions = document.querySelectorAll('.lang-option');
+    for (var n = 0; n < langOptions.length; n++) {
+      var btn = langOptions[n];
+      if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+
+    document.documentElement.lang = lang === 'en' ? 'en' : 'es';
+    updatePlaceholders();
+  }
+
+  window.i18n = {
+    t: t,
+    setLanguage: setLanguage,
+    currentLang: function () { return currentLang; },
+    translations: translations
+  };
+})();

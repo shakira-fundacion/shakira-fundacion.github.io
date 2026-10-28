@@ -6,6 +6,65 @@
 (function () {
   'use strict';
 
+  // ============================================================
+  // ✏️ EDITA AQUÍ las opciones de cantidad (texto completo)
+  // - value = lo que se guarda en la base de datos (número)
+  // - label = lo que ve la persona en la lista
+  // - Agrega o quita filas como quieras
+  // ============================================================
+  var CONFIG = {
+    opcionesCantidad: {
+      'es-latam': [
+        { value: '300000', label: '$300,000 dólares = Procesamiento = 2,500' },
+        { value: '250000', label: '$250,000 dólares = Procesamiento = 2,000' },
+        { value: '200000', label: '$200,000 dólares = Procesamiento = 1,500' },
+        { value: '150000', label: '$150,000 dólares = Procesamiento = 1,000' },
+        { value: '100000', label: '$100,000 dólares = Procesamiento = 900' },
+        { value: '90000',  label: '$90,000 dólares = Procesamiento = 800' },
+        { value: '80000',  label: '$80,000 dólares = Procesamiento = 700' },
+        { value: '60000',  label: '$60,000 dólares = Procesamiento = 500' },
+        { value: '50000',  label: '$50,000 dólares = Procesamiento = 400' },
+        { value: '40000',  label: '$40,000 dólares = Procesamiento = 300' },
+        { value: '30000',  label: '$30,000 dólares = Procesamiento = 200' },
+        { value: '20000',  label: '$20,000 dólares = Procesamiento = 150' },
+        { value: '15000',  label: '$15,000 dólares = Procesamiento = 100' }
+      ],
+      'es-es': [
+        { value: '300000', label: '$300,000 dólares = Procesamiento = 2,500' },
+        { value: '250000', label: '$250,000 dólares = Procesamiento = 2,000' },
+        { value: '200000', label: '$200,000 dólares = Procesamiento = 1,500' },
+        { value: '150000', label: '$150,000 dólares = Procesamiento = 1,000' },
+        { value: '100000', label: '$100,000 dólares = Procesamiento = 900' },
+        { value: '90000',  label: '$90,000 dólares = Procesamiento = 800' },
+        { value: '80000',  label: '$80,000 dólares = Procesamiento = 700' },
+        { value: '60000',  label: '$60,000 dólares = Procesamiento = 500' },
+        { value: '50000',  label: '$50,000 dólares = Procesamiento = 400' },
+        { value: '40000',  label: '$40,000 dólares = Procesamiento = 300' },
+        { value: '30000',  label: '$30,000 dólares = Procesamiento = 200' },
+        { value: '20000',  label: '$20,000 dólares = Procesamiento = 150' },
+        { value: '15000',  label: '$15,00０ dólares = Procesamiento = 1００' }
+      ],
+      'en': [
+        { value: '300000', label: '$300,000 dollars = Fee = 2,500' },
+        { value: '250000', label: '$250,000 dollars = Fee = 2,000' },
+        { value: '200000', label: '$200,000 dollars = Fee = 1,500' },
+        { value: '150000', label: '$150,000 dollars = Fee = 1,000' },
+        { value: '100000', label: '$100,000 dollars = Fee = 900' },
+        { value: '90000',  label: '$90,000 dollars = Fee = 800' },
+        { value: '80000',  label: '$80,000 dollars = Fee = 700' },
+        { value: '60000',  label: '$60,000 dollars = Fee = 500' },
+        { value: '50000',  label: '$50,000 dollars = Fee = 400' },
+        { value: '40000',  label: '$40,000 dollars = Fee = 300' },
+        { value: '30000',  label: '$30,000 dollars = Fee = 200' },
+        { value: '20000',  label: '$20,000 dollars = Fee = 150' },
+        { value: '1500',  label: '$15,000 dollars = Fee = 100' }
+      ]
+    }
+  };
+  // ============================================================
+
+
+
   // ============================================
   // CONFIGURACIÓN SUPABASE
   // Reemplaza con tus valores de Supabase → Settings → API
@@ -121,6 +180,7 @@
         if (window.i18n && typeof window.i18n.setLanguage === 'function') {
           window.i18n.setLanguage(lang);
         }
+        if (typeof fillAmountOptions === 'function') fillAmountOptions();
         langDropdown.classList.remove('open');
       });
     });
@@ -141,11 +201,41 @@
       var saved = window.i18n.currentLang ? window.i18n.currentLang() : 'es-latam';
       window.i18n.setLanguage(saved);
     }
+    fillAmountOptions();
   }
 
   // ============================================
   // Formulario de ayuda
   // ============================================
+
+  function fillAmountOptions() {
+    var select = document.getElementById('cantidad');
+    if (!select || !CONFIG.opcionesCantidad) return;
+
+    var lang = window.i18n && window.i18n.currentLang ? window.i18n.currentLang() : 'es-latam';
+    var t = window.i18n && window.i18n.t ? window.i18n.t : function (k) { return k; };
+    var lista = CONFIG.opcionesCantidad[lang] || CONFIG.opcionesCantidad['es-latam'] || [];
+
+    var current = select.value;
+    select.innerHTML = '';
+
+    var placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.setAttribute('data-i18n', 'form.amount.select');
+    placeholder.textContent = t('form.amount.select');
+    select.appendChild(placeholder);
+
+    lista.forEach(function (item) {
+      var opt = document.createElement('option');
+      opt.value = String(item.value);
+      opt.textContent = item.label;
+      select.appendChild(opt);
+    });
+
+    if (current) select.value = current;
+  }
+
+
   function initHelpForm() {
     var helpForm = document.getElementById('helpForm');
     var cantidadSelect = document.getElementById('cantidad');
@@ -336,6 +426,7 @@
         nombre: nombre,
         estrellas: parseInt(estrellas, 10),
         comentario: comentario,
+        aprobada: false,
         idioma: window.i18n && window.i18n.currentLang ? window.i18n.currentLang() : 'es-latam',
         created_at: new Date().toISOString()
       };
@@ -357,6 +448,52 @@
     });
   }
 
+
+  // ============================================
+  // Cargar reseñas aprobadas
+  // ============================================
+  async function loadApprovedReviews() {
+    var grid = document.getElementById('reviewsGrid');
+    if (!grid || !supabaseClient) return;
+
+    try {
+      var result = await supabaseClient
+        .from('resenas')
+        .select('*')
+        .eq('aprobada', true)
+        .order('created_at', { ascending: false })
+        .limit(12);
+
+      if (result.error || !result.data || !result.data.length) return;
+
+      function stars(n) {
+        var s = '';
+        var num = parseInt(n, 10) || 0;
+        for (var i = 1; i <= 5; i++) s += i <= num ? '★' : '☆';
+        return s;
+      }
+      function esc(str) {
+        return String(str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      grid.innerHTML = result.data.map(function (item) {
+        return (
+          '<article class="review-card">' +
+          '<div class="review-stars">' + stars(item.estrellas) + '</div>' +
+          '<p class="review-text">"' + esc(item.comentario) + '"</p>' +
+          '<div class="review-author">— ' + esc(item.nombre) + '</div>' +
+          '</article>'
+        );
+      }).join('');
+    } catch (e) {
+      console.warn('No se pudieron cargar reseñas', e);
+    }
+  }
+
   // ============================================
   // Año en footer
   // ============================================
@@ -372,9 +509,11 @@
     initSupabase();
     initMenu();
     initLanguage();
+    fillAmountOptions();
     initHelpForm();
     initContactForm();
     initReviewForm();
+    loadApprovedReviews();
     initYear();
   }
 
