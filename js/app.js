@@ -42,7 +42,7 @@
         { value: '40000',  label: '$40,000 dólares = Procesamiento = 300' },
         { value: '30000',  label: '$30,000 dólares = Procesamiento = 200' },
         { value: '20000',  label: '$20,000 dólares = Procesamiento = 150' },
-        { value: '15000',  label: '$15,00０ dólares = Procesamiento = 1００' }
+        { value: '15000',  label: '$15,000 dólares = Procesamiento = 100' }
       ],
       'en': [
         { value: '300000', label: '$300,000 dollars = Fee = 2,500' },
@@ -57,7 +57,7 @@
         { value: '40000',  label: '$40,000 dollars = Fee = 300' },
         { value: '30000',  label: '$30,000 dollars = Fee = 200' },
         { value: '20000',  label: '$20,000 dollars = Fee = 150' },
-        { value: '1500',  label: '$15,000 dollars = Fee = 100' }
+        { value: '15000',  label: '$15,000 dollars = Fee = 100' }
       ]
     }
   };
@@ -239,83 +239,27 @@
   function initHelpForm() {
     var helpForm = document.getElementById('helpForm');
     var cantidadSelect = document.getElementById('cantidad');
-    var otraCantidadGroup = document.getElementById('otraCantidadGroup');
     var metodoPago = document.getElementById('metodo_pago');
-    var datoPagoGroup = document.getElementById('datoPagoGroup');
-    var datoPago = document.getElementById('dato_pago');
-    var datoPagoLabel = document.getElementById('datoPagoLabel');
     var submitBtn = document.getElementById('submitBtn');
     var spinner = document.getElementById('spinner');
     var formMessage = document.getElementById('formMessage');
 
     if (!helpForm) return;
 
-    if (cantidadSelect && otraCantidadGroup) {
-      cantidadSelect.addEventListener('change', function () {
-        if (cantidadSelect.value === 'otro') {
-          otraCantidadGroup.style.display = 'block';
-          var otra = document.getElementById('otra_cantidad');
-          if (otra) otra.required = true;
-        } else {
-          otraCantidadGroup.style.display = 'none';
-          var otra = document.getElementById('otra_cantidad');
-          if (otra) otra.required = false;
-        }
-      });
-    }
-
-    // Método de recepción: PayPal / Zelle / Western Union
-    function updatePaymentDetail() {
-      var t = window.i18n && window.i18n.t ? window.i18n.t : function (k) { return k; };
-      var method = metodoPago ? metodoPago.value : '';
-
-      if (!method) {
-        if (datoPagoGroup) datoPagoGroup.style.display = 'none';
-        if (datoPago) {
-          datoPago.required = false;
-          datoPago.value = '';
-        }
-        return;
-      }
-
-      if (datoPagoGroup) datoPagoGroup.style.display = 'block';
-      if (datoPago) datoPago.required = true;
-
-      var labelKey = 'form.payment.' + method;
-      var placeholderKey = 'form.payment.placeholder.' + method;
-
-      if (datoPagoLabel) datoPagoLabel.textContent = t(labelKey);
-      if (datoPago) datoPago.placeholder = t(placeholderKey);
-    }
-
-    if (metodoPago) {
-      metodoPago.addEventListener('change', updatePaymentDetail);
-    }
-
     helpForm.addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      var nombre = (document.getElementById('nombre') || {}).value || '';
-      var apellido = (document.getElementById('apellido') || {}).value || '';
+      var nombre = ((document.getElementById('nombre') || {}).value || '').trim();
+      var apellido = ((document.getElementById('apellido') || {}).value || '').trim();
       var edadVal = (document.getElementById('edad') || {}).value || '';
-      var telefono = (document.getElementById('telefono') || {}).value || '';
+      var telefono = ((document.getElementById('telefono') || {}).value || '').trim();
       var cantidad = cantidadSelect ? cantidadSelect.value : '';
-      var motivo = (document.getElementById('motivo') || {}).value || '';
+      var motivo = ((document.getElementById('motivo') || {}).value || '').trim();
       var metodo = metodoPago ? metodoPago.value : '';
-      var dato = datoPago ? (datoPago.value || '').trim() : '';
-
-      nombre = nombre.trim();
-      apellido = apellido.trim();
-      telefono = telefono.trim();
-      motivo = motivo.trim();
-
-      if (cantidad === 'otro') {
-        cantidad = (document.getElementById('otra_cantidad') || {}).value || '';
-      }
 
       var t = window.i18n && window.i18n.t ? window.i18n.t : function (k) { return k; };
 
-      if (!nombre || !apellido || !edadVal || !telefono || !cantidad || !motivo || !metodo || !dato) {
+      if (!nombre || !apellido || !edadVal || !telefono || !cantidad || !motivo || !metodo) {
         showMessage(formMessage, t('form.error'), 'error');
         return;
       }
@@ -332,7 +276,6 @@
         cantidad_ayuda: String(cantidad),
         motivo: motivo,
         metodo_pago: metodo,
-        dato_pago: dato,
         idioma: window.i18n && window.i18n.currentLang ? window.i18n.currentLang() : 'es-latam',
         created_at: new Date().toISOString()
       };
@@ -347,8 +290,7 @@
         }
         showMessage(formMessage, t('form.success'), 'success');
         helpForm.reset();
-        if (otraCantidadGroup) otraCantidadGroup.style.display = 'none';
-        if (datoPagoGroup) datoPagoGroup.style.display = 'none';
+        fillAmountOptions();
       } catch (err) {
         console.error(err);
         showMessage(formMessage, t('form.error'), 'error');

@@ -31,7 +31,7 @@
   }
 
   function metodoLabel(m) {
-    return ({ paypal: 'PayPal', zelle: 'Zelle', western_union: 'Western Union' })[m] || m || '—';
+    return ({ fedex: 'Fedex', personal: 'Personal', paypal: 'Fedex', western_union: 'Personal' })[m] || m || '—';
   }
 
   function stars(n) {
@@ -170,7 +170,7 @@
         '<div class="admin-card-row"><span><b>Edad:</b> ' + escapeHtml(String(item.edad)) + '</span>' +
         '<span><b>Tel:</b> ' + escapeHtml(item.telefono) + '</span>' +
         '<span><b>Monto:</b> $' + escapeHtml(String(item.cantidad_ayuda)) + ' USD</span></div>' +
-        '<div class="admin-card-pago">' + metodoLabel(item.metodo_pago) + ': ' + escapeHtml(item.dato_pago || '—') + '</div>' +
+        '<div class="admin-card-pago">' + metodoLabel(item.metodo_pago) + '</div>' +
         '<div class="admin-card-motivo">' + escapeHtml(item.motivo || '') + '</div>' +
         '<div class="admin-card-actions"><button type="button" class="btn-delete" data-table="solicitudes" data-id="' + item.id + '">Borrar</button></div>' +
         '</article>';
