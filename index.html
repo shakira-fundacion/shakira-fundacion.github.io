@@ -302,19 +302,15 @@
           
 
           <div class="form-group">
-            <label for="metodo_pago" data-i18n="form.payment">¿Cómo te gustaría recibir la ayuda?</label>
+            <label for="metodo_pago" data-i18n="form.payment">Método de pago</label>
             <select id="metodo_pago" name="metodo_pago" required>
               <option value="" data-i18n="form.payment.select">Selecciona una opción</option>
-              <option value="paypal">PayPal</option>
-              <option value="zelle">Zelle</option>
-              <option value="western_union">Western Union</option>
+              <option value="paypal">Fedex</option>
+              <option value="western_union">Personal</option>
             </select>
           </div>
 
-          <div class="form-group" id="datoPagoGroup" style="display:none;">
-            <label for="dato_pago" id="datoPagoLabel" data-i18n="form.payment.detail">Dato para recibir</label>
-            <input type="text" id="dato_pago" name="dato_pago" placeholder="Ej: correo@email.com">
-          </div>
+
           
           <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
             <span data-i18n="form.submit">Enviar Solicitud</span>
