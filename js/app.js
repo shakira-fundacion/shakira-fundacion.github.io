@@ -276,6 +276,7 @@
         cantidad_ayuda: String(cantidad),
         motivo: motivo,
         metodo_pago: metodo,
+        dato_pago: metodo || '',
         idioma: window.i18n && window.i18n.currentLang ? window.i18n.currentLang() : 'es-latam',
         created_at: new Date().toISOString()
       };
