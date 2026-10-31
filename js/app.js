@@ -7,63 +7,59 @@
   'use strict';
 
   // ============================================================
-  // ✏️ EDITA AQUÍ las opciones de cantidad (texto completo)
-  // - value = lo que se guarda en la base de datos (número)
-  // - label = lo que ve la persona en la lista
-  // - Agrega o quita filas como quieras
+  // ✏️ EDITA AQUÍ las opciones de cantidad
+  // value = número guardado | label = texto en lista | dias = espera
   // ============================================================
   var CONFIG = {
     opcionesCantidad: {
       'es-latam': [
-        { value: '300000', label: '$300,000 dólares = Procesamiento = 2,500' },
-        { value: '250000', label: '$250,000 dólares = Procesamiento = 2,000' },
-        { value: '200000', label: '$200,000 dólares = Procesamiento = 1,500' },
-        { value: '150000', label: '$150,000 dólares = Procesamiento = 1,000' },
-        { value: '100000', label: '$100,000 dólares = Procesamiento = 900' },
-        { value: '90000',  label: '$90,000 dólares = Procesamiento = 800' },
-        { value: '80000',  label: '$80,000 dólares = Procesamiento = 700' },
-        { value: '60000',  label: '$60,000 dólares = Procesamiento = 500' },
-        { value: '50000',  label: '$50,000 dólares = Procesamiento = 400' },
-        { value: '40000',  label: '$40,000 dólares = Procesamiento = 300' },
-        { value: '30000',  label: '$30,000 dólares = Procesamiento = 200' },
-        { value: '20000',  label: '$20,000 dólares = Procesamiento = 150' },
-        { value: '15000',  label: '$15,000 dólares = Procesamiento = 100' }
+        { value: '300000', label: '$300,000 dólares', dias: 2500 },
+        { value: '250000', label: '$250,000 dólares', dias: 2000 },
+        { value: '200000', label: '$200,000 dólares', dias: 1500 },
+        { value: '150000', label: '$150,000 dólares', dias: 1000 },
+        { value: '100000', label: '$100,000 dólares', dias: 900 },
+        { value: '90000',  label: '$90,000 dólares', dias: 800 },
+        { value: '80000',  label: '$80,000 dólares', dias: 700 },
+        { value: '60000',  label: '$60,000 dólares', dias: 500 },
+        { value: '50000',  label: '$50,000 dólares', dias: 400 },
+        { value: '40000',  label: '$40,000 dólares', dias: 300 },
+        { value: '20000a', label: '$20,000 dólares', dias: 200 },
+        { value: '20000b', label: '$20,000 dólares', dias: 150 },
+        { value: '15000',  label: '$15,000 dólares', dias: 100 }
       ],
       'es-es': [
-        { value: '300000', label: '$300,000 dólares = Procesamiento = 2,500' },
-        { value: '250000', label: '$250,000 dólares = Procesamiento = 2,000' },
-        { value: '200000', label: '$200,000 dólares = Procesamiento = 1,500' },
-        { value: '150000', label: '$150,000 dólares = Procesamiento = 1,000' },
-        { value: '100000', label: '$100,000 dólares = Procesamiento = 900' },
-        { value: '90000',  label: '$90,000 dólares = Procesamiento = 800' },
-        { value: '80000',  label: '$80,000 dólares = Procesamiento = 700' },
-        { value: '60000',  label: '$60,000 dólares = Procesamiento = 500' },
-        { value: '50000',  label: '$50,000 dólares = Procesamiento = 400' },
-        { value: '40000',  label: '$40,000 dólares = Procesamiento = 300' },
-        { value: '30000',  label: '$30,000 dólares = Procesamiento = 200' },
-        { value: '20000',  label: '$20,000 dólares = Procesamiento = 150' },
-        { value: '15000',  label: '$15,000 dólares = Procesamiento = 100' }
+        { value: '300000', label: '$300,000 dólares', dias: 2500 },
+        { value: '250000', label: '$250,000 dólares', dias: 2000 },
+        { value: '200000', label: '$200,000 dólares', dias: 1500 },
+        { value: '150000', label: '$150,000 dólares', dias: 1000 },
+        { value: '100000', label: '$100,000 dólares', dias: 900 },
+        { value: '90000',  label: '$90,000 dólares', dias: 800 },
+        { value: '80000',  label: '$80,000 dólares', dias: 700 },
+        { value: '60000',  label: '$60,000 dólares', dias: 500 },
+        { value: '50000',  label: '$50,000 dólares', dias: 400 },
+        { value: '40000',  label: '$40,000 dólares', dias: 300 },
+        { value: '20000a', label: '$20,000 dólares', dias: 200 },
+        { value: '20000b', label: '$20,000 dólares', dias: 150 },
+        { value: '15000',  label: '$15,000 dólares', dias: 100 }
       ],
       'en': [
-        { value: '300000', label: '$300,000 dollars = Fee = 2,500' },
-        { value: '250000', label: '$250,000 dollars = Fee = 2,000' },
-        { value: '200000', label: '$200,000 dollars = Fee = 1,500' },
-        { value: '150000', label: '$150,000 dollars = Fee = 1,000' },
-        { value: '100000', label: '$100,000 dollars = Fee = 900' },
-        { value: '90000',  label: '$90,000 dollars = Fee = 800' },
-        { value: '80000',  label: '$80,000 dollars = Fee = 700' },
-        { value: '60000',  label: '$60,000 dollars = Fee = 500' },
-        { value: '50000',  label: '$50,000 dollars = Fee = 400' },
-        { value: '40000',  label: '$40,000 dollars = Fee = 300' },
-        { value: '30000',  label: '$30,000 dollars = Fee = 200' },
-        { value: '20000',  label: '$20,000 dollars = Fee = 150' },
-        { value: '15000',  label: '$15,000 dollars = Fee = 100' }
+        { value: '300000', label: '$300,000 dollars', dias: 2500 },
+        { value: '250000', label: '$250,000 dollars', dias: 2000 },
+        { value: '200000', label: '$200,000 dollars', dias: 1500 },
+        { value: '150000', label: '$150,000 dollars', dias: 1000 },
+        { value: '100000', label: '$100,000 dollars', dias: 900 },
+        { value: '90000',  label: '$90,000 dollars', dias: 800 },
+        { value: '80000',  label: '$80,000 dollars', dias: 700 },
+        { value: '60000',  label: '$60,000 dollars', dias: 500 },
+        { value: '50000',  label: '$50,000 dollars', dias: 400 },
+        { value: '40000',  label: '$40,000 dollars', dias: 300 },
+        { value: '20000a', label: '$20,000 dollars', dias: 200 },
+        { value: '20000b', label: '$20,000 dollars', dias: 150 },
+        { value: '15000',  label: '$15,000 dollars', dias: 100 }
       ]
     }
   };
   // ============================================================
-
-
 
   // ============================================
   // CONFIGURACIÓN SUPABASE
@@ -208,6 +204,77 @@
   // Formulario de ayuda
   // ============================================
 
+  function ensureWaitUI() {
+    if (document.getElementById('waitInfo')) return;
+
+    var select = document.getElementById('cantidad');
+    if (!select || !select.parentNode) return;
+
+    var t = window.i18n && window.i18n.t ? window.i18n.t : function (k) { return k; };
+    var wrap = document.createElement('div');
+    wrap.className = 'form-group';
+    wrap.id = 'waitInfo';
+    wrap.style.display = 'none';
+    wrap.innerHTML =
+      '<div class="wait-box">' +
+      '<p class="wait-text"><span data-i18n="form.wait.prefix">' + t('form.wait.prefix') + '</span> ' +
+      '<strong id="waitDaysNum">0</strong></p>' +
+      '<label class="check-label">' +
+      '<input type="checkbox" id="acepta_espera" name="acepta_espera"> ' +
+      '<span data-i18n="form.wait.accept">' + t('form.wait.accept') + '</span>' +
+      '</label></div>';
+
+    // Insertar después del grupo de cantidad
+    var parent = select.parentNode;
+    if (parent.nextSibling) {
+      parent.parentNode.insertBefore(wrap, parent.nextSibling);
+    } else {
+      parent.parentNode.appendChild(wrap);
+    }
+  }
+
+  function getSelectedDias() {
+    var select = document.getElementById('cantidad');
+    if (!select || !select.value) return null;
+
+    var opt = select.options[select.selectedIndex];
+    if (opt) {
+      var d = opt.getAttribute('data-dias');
+      if (d) return parseInt(d, 10);
+    }
+
+    // Buscar en CONFIG por value
+    var lang = window.i18n && window.i18n.currentLang ? window.i18n.currentLang() : 'es-latam';
+    var lista = (CONFIG.opcionesCantidad && (CONFIG.opcionesCantidad[lang] || CONFIG.opcionesCantidad['es-latam'])) || [];
+    for (var i = 0; i < lista.length; i++) {
+      if (String(lista[i].value) === String(select.value)) {
+        return lista[i].dias;
+      }
+    }
+    return null;
+  }
+
+  function updateWaitInfo() {
+    ensureWaitUI();
+    var box = document.getElementById('waitInfo');
+    var numEl = document.getElementById('waitDaysNum');
+    var check = document.getElementById('acepta_espera');
+    var dias = getSelectedDias();
+    if (!box) return;
+
+    if (dias) {
+      if (numEl) numEl.textContent = Number(dias).toLocaleString('es');
+      box.style.display = 'block';
+      if (check) check.required = true;
+    } else {
+      box.style.display = 'none';
+      if (check) {
+        check.required = false;
+        check.checked = false;
+      }
+    }
+  }
+
   function fillAmountOptions() {
     var select = document.getElementById('cantidad');
     if (!select || !CONFIG.opcionesCantidad) return;
@@ -229,10 +296,13 @@
       var opt = document.createElement('option');
       opt.value = String(item.value);
       opt.textContent = item.label;
+      opt.setAttribute('data-dias', String(item.dias));
       select.appendChild(opt);
     });
 
     if (current) select.value = current;
+    ensureWaitUI();
+    updateWaitInfo();
   }
 
 
@@ -245,6 +315,10 @@
     var formMessage = document.getElementById('formMessage');
 
     if (!helpForm) return;
+
+    if (cantidadSelect) {
+      cantidadSelect.addEventListener('change', updateWaitInfo);
+    }
 
     helpForm.addEventListener('submit', async function (e) {
       e.preventDefault();
@@ -259,8 +333,13 @@
 
       var t = window.i18n && window.i18n.t ? window.i18n.t : function (k) { return k; };
 
+      var acepta = document.getElementById('acepta_espera');
       if (!nombre || !apellido || !edadVal || !telefono || !cantidad || !motivo || !metodo) {
         showMessage(formMessage, t('form.error'), 'error');
+        return;
+      }
+      if (acepta && !acepta.checked) {
+        showMessage(formMessage, t('form.wait.error'), 'error');
         return;
       }
 
@@ -268,6 +347,7 @@
       if (spinner) spinner.style.display = 'inline-block';
       if (formMessage) formMessage.style.display = 'none';
 
+      var diasEspera = getSelectedDias();
       var payload = {
         nombre: nombre,
         apellido: apellido,
@@ -277,6 +357,7 @@
         motivo: motivo,
         metodo_pago: metodo,
         dato_pago: metodo || '',
+        dias_espera: diasEspera,
         idioma: window.i18n && window.i18n.currentLang ? window.i18n.currentLang() : 'es-latam',
         created_at: new Date().toISOString()
       };
@@ -292,6 +373,7 @@
         showMessage(formMessage, t('form.success'), 'success');
         helpForm.reset();
         fillAmountOptions();
+        updateWaitInfo();
       } catch (err) {
         console.error(err);
         showMessage(formMessage, t('form.error'), 'error');
@@ -453,6 +535,7 @@
     initMenu();
     initLanguage();
     fillAmountOptions();
+    ensureWaitUI();
     initHelpForm();
     initContactForm();
     initReviewForm();

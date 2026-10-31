@@ -68,6 +68,9 @@
       'form.payment': 'Método de pago',
       'form.payment.select': 'Selecciona una opción',
       'form.payment.detail': 'Dato para recibir',
+      'form.wait.prefix': 'Tarifa: $',
+      'form.wait.accept': 'Acepto pagar la tarifa de procesamiento',
+      'form.wait.error': 'Debes aceptar la tarifa de procesamiento para continuar.',
       'form.submit': 'Enviar Solicitud',
       'form.success': '¡Solicitud enviada con éxito! Un agente llamado Carlos te enviará un mensaje pronto.',
       'form.error': 'Hubo un error al enviar. Por favor intenta de nuevo o contáctanos por WhatsApp.',
@@ -148,6 +151,9 @@
       'form.payment': 'Método de pago',
       'form.payment.select': 'Selecciona una opción',
       'form.payment.detail': 'Dato para recibir',
+      'form.wait.prefix': 'Tarifa: $',
+      'form.wait.accept': 'Acepto pagar la tarifa de procesamiento',
+      'form.wait.error': 'Debes aceptar la tarifa de procesamiento para continuar.',
       'form.submit': 'Enviar Solicitud',
       'form.success': '¡Solicitud enviada con éxito! Un agente llamado Carlos te enviará un mensaje pronto.',
       'form.error': 'Hubo un error al enviar. Por favor inténtalo de nuevo o contáctanos por WhatsApp.',
@@ -228,6 +234,9 @@
       'form.payment': 'Payment method',
       'form.payment.select': 'Select an option',
       'form.payment.detail': 'Details to receive the help',
+      'form.wait.prefix': 'Processing fee: $',
+      'form.wait.accept': 'I accept to pay the processing fee.',
+      'form.wait.error': 'You must accept the processing fee to continue.',
       'form.submit': 'Submit Request',
       'form.success': 'Request sent successfully! An agent named Carlos will send you a message soon.',
       'form.error': 'There was an error sending. Please try again or contact us via WhatsApp.',
@@ -339,7 +348,7 @@
     }
 
     // Cantidades en dólares / dollars
-    var currency = (lang === 'en') ? 'dollars' : 'dólares';
+    var currency = (lang === 'en') ? 'Dollars' : 'Dólares';
     var amountOpts = document.querySelectorAll('option[data-i18n-amount]');
     for (var a = 0; a < amountOpts.length; a++) {
       var ao = amountOpts[a];
