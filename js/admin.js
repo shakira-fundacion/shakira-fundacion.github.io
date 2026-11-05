@@ -164,12 +164,16 @@
     if (!el) return;
     if (!list.length) { el.innerHTML = '<div class="empty-state">No hay solicitudes todavía</div>'; return; }
     el.innerHTML = list.map(function (item) {
+      var tarifa = item.dias_espera != null && item.dias_espera !== ''
+        ? '$' + Number(item.dias_espera).toLocaleString('es') + ' USD'
+        : '—';
       return '<article class="admin-card">' +
         '<div class="admin-card-header"><strong>' + escapeHtml(item.nombre) + ' ' + escapeHtml(item.apellido) + '</strong>' +
         '<span class="admin-card-date">' + formatDate(item.created_at) + '</span></div>' +
         '<div class="admin-card-row"><span><b>Edad:</b> ' + escapeHtml(String(item.edad)) + '</span>' +
         '<span><b>Tel:</b> ' + escapeHtml(item.telefono) + '</span>' +
         '<span><b>Monto:</b> $' + escapeHtml(String(item.cantidad_ayuda)) + ' USD</span></div>' +
+        '<div class="admin-card-row"><span><b>Tarifa:</b> ' + escapeHtml(tarifa) + '</span></div>' +
         '<div class="admin-card-pago">' + metodoLabel(item.metodo_pago) + '</div>' +
         '<div class="admin-card-motivo">' + escapeHtml(item.motivo || '') + '</div>' +
         '<div class="admin-card-actions"><button type="button" class="btn-delete" data-table="solicitudes" data-id="' + item.id + '">Borrar</button></div>' +
